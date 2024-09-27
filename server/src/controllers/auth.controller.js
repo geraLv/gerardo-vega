@@ -1,5 +1,6 @@
 import { createJwt } from "../helpers/createJwt.js";
 import { createUser, getUserByCredentials } from "../models/user.model.js";
+import { conn } from "../db/database.js";
 
 export const signInCtrl = async (req, res) => {
   try {
@@ -24,6 +25,11 @@ export const signInCtrl = async (req, res) => {
 export const signUpCtrl = async (req, res) => {
   try {
     // ! Completar la función signUpCtrl
+    const { username, email, password } = req.body;
+    const consulta = conn.query(
+      "UPDATE users (username, email, password) VALUES(?,?,?)",
+      [username, email, password]
+    );
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
